@@ -1,0 +1,13 @@
+<h1>Dashboard</h1>
+
+<ul>
+{foreach $posts as $post}
+    <li>
+        <a n:href=":Post:show $post->id">
+            {$post->title}
+        </a>
+    </li>
+{/foreach}
+</ul>
+
+<p><a n:href="Sign:out">Odhlásit se</a></p>
