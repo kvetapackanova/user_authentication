@@ -27,5 +27,33 @@ final class PostPresenter extends Presenter
         }
 
         $this->template->post = $post;
+            $this->template->rating = $this->postFacade->getRatingCount($id);
     }
+    public function handleLiked(int $postId, int $liked): void
+{
+    // musí být přihlášen
+    if (!$this->getUser()->isLoggedIn()) {
+        $this->flashMessage('Musíte být přihlášen.');
+        $this->redirect('Sign:in');
+    }
+
+    $userId = $this->getUser()->getId();
+
+    $this->postFacade->updateRating($userId, $postId, $liked);
+    // refresh stránky
+    $this->redirect('this');
+}
+public function handleUnlike(int $postId): void
+{
+    if (!$this->getUser()->isLoggedIn()) {
+        $this->flashMessage('Musíte být přihlášen.');
+        $this->redirect('Sign:in');
+    }
+
+    $userId = $this->getUser()->getId();
+
+    $this->postFacade->removeRating($userId, $postId);
+
+    $this->redirect('this');
+}
 }
