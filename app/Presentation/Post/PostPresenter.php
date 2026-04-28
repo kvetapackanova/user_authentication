@@ -40,8 +40,16 @@ final class PostPresenter extends Presenter
     $userId = $this->getUser()->getId();
 
     $this->postFacade->updateRating($userId, $postId, $liked);
-    // refresh stránky
-    $this->redirect('this');
+
+    // 🔥 přepočet ratingu
+    $this->template->rating = $this->postFacade->getRatingCount($postId);
+
+    // 🔥 AJAX redraw
+    if ($this->isAjax()) {
+        $this->redrawControl('ratingSnippet');
+    } else {
+        $this->redirect('this');
+    }
 }
 public function handleUnlike(int $postId): void
 {
@@ -56,4 +64,5 @@ public function handleUnlike(int $postId): void
 
     $this->redirect('this');
 }
+
 }

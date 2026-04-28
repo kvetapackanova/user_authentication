@@ -7,12 +7,16 @@
 
 <p>{$post->content}</p>
 
+<div n:snippet="ratingSnippet">
 <a n:href="liked! $post->id, 1">👍 Líbí se mi</a><br>
 <a n:href="liked! $post->id, 0">👎 Nelíbí se mi</a><br>
 
 <a n:href="unlike! $post->id">❌ Zrušit hodnocení</a>
 <p>👍 {$rating['likes']} | 👎 {$rating['dislikes']}</p>
-
+<h1>{$post->title}</h1>
+<p>{$post->content}</p>
+</div>
+   
 
 <br><br>
 <a n:href="Dashboard:default">← zpět</a>
